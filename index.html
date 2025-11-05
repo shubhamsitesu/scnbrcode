@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="id-ID" class="scroll-smooth">
 <head>
-    <!-- ===================================
-         ADVANCED SEO & META TAGS
-         =================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scan Barcode Online Gratis | Pemindai Tercepat & Paling Akurat | ScanBarcode.net</title>
@@ -11,82 +8,92 @@
     <meta name="keywords" content="scan barcode, pemindai barcode, qr code scanner, scan barcode online, scan qr code, baca barcode, scan barcode hp, cara scan barcode, jenis barcode, kode EAN, kode UPC">
     <meta name="author" content="ScanBarcode.net">
     <link rel="canonical" href="https://scanbarcode.net/" />
-
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://scanbarcode.net/">
     <meta property="og:title" content="Scan Barcode Online Gratis | Pemindai Tercepat & Paling Akurat">
     <meta property="og:description" content="Scan barcode & QR code apa pun secara instan. Gratis, cepat, dan aman. Tanpa perlu install aplikasi. Support semua jenis barcode.">
     <meta property="og:image" content="https://scanbarcode.net/og-image.jpg">
-
-    <!-- Twitter Card -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://scanbarcode.net/">
     <meta property="twitter:title" content="Scan Barcode Online Gratis | Pemindai Tercepat & Paling Akurat">
     <meta property="twitter:description" content="Scan barcode & QR code apa pun secara instan. Gratis, cepat, dan aman. Tanpa perlu install aplikasi.">
     <meta property="twitter:image" content="https://scanbarcode.net/twitter-image.jpg">
-
-    <!-- Favicon & PWA Manifest -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#3B82F6">
-
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- ZXing Library for Barcode Scanning -->
     <script src="https://unpkg.com/@zxing/library@latest"></script>
-    <!-- Custom Styles for Scanner Modal -->
     <style>
+        /* Main Modal Overlay */
         .modal {
             position: fixed;
             z-index: 9999;
-            left: 0; top: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(17,24,39,0.95); /* Neutral dark overlay */
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .scan-box {
-            position: relative;
-            width: 330px; max-width: 93vw;
-            height: 330px; max-height: 73vw;
-            background: #0f172a;
-            border-radius: 1.5em;
-            padding: 0.7em;
-            box-shadow: 0 6px 24px #2226;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(17,24,39,0.95);
             display: flex; align-items: center; justify-content: center;
         }
-        .scan-box video { border-radius: 0.75em; background: #000; }
-        .scan-guide {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border: 2.5px solid #3B82F6;
-            border-radius: 1.2em;
+        /* Barcode Scan Area */
+        .scan-box {
+            position: relative;
+            width: 330px; max-width: 95vw; height: 330px; max-height: 95vw;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 1.5em; 
+        }
+        .scan-video {
+            width: 100%; height: 100%;
+            border-radius: 1.5em;
+            object-fit: cover;
+            background: #000;
+        }
+        /* Scan Overlay (Visual Guidance) */
+        .scan-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             pointer-events: none;
+            box-sizing: border-box;
+            box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.7); 
+            border-radius: 1.5em;
+            z-index: 10;
+            /* Corner Markers */
+            background: 
+                linear-gradient(to right, #3B82F6 4px, transparent 4px) 0 0,
+                linear-gradient(to left, #3B82F6 4px, transparent 4px) 100% 0,
+                linear-gradient(to bottom, #3B82F6 4px, transparent 4px) 0 0,
+                linear-gradient(to bottom, #3B82F6 4px, transparent 4px) 100% 0,
+                linear-gradient(to right, #3B82F6 4px, transparent 4px) 0 100%,
+                linear-gradient(to left, #3B82F6 4px, transparent 4px) 100% 100%,
+                linear-gradient(to top, #3B82F6 4px, transparent 4px) 0 100%,
+                linear-gradient(to top, #3B82F6 4px, transparent 4px) 100% 100%;
+            background-repeat: no-repeat;
+            background-size: 25px 25px; 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .scanning-line {
+            position: absolute;
+            left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3B82F6 0%, #38bdf8 100%);
+            border-radius: 2px;
+            animation: scanline 2s linear infinite;
+        }
+        @keyframes scanline {
+            0%   { top: 16px; }
+            100% { top: calc(100% - 16px); }
+        }
+        @media(max-width: 480px){
+            .scan-box{ width: 93vw; height: 93vw; }
         }
         #stop-btn {
-            position: absolute;
-            top: 36px; right: 36px;
-            z-index: 10002;
+            position: absolute; top: 30px; right: 30px; z-index: 999;
         }
-        @media (max-width:480px) {
-            .scan-box { width: 93vw; height: 73vw; }
-            #stop-btn { right: 6vw; top: 10vw; padding: 0.6em 1.1em; }
-        }
-        /*=== Your previous custom styles preserved ===*/
-        .scanning-line { animation: scan 2s linear infinite; }
-        @keyframes scan { 0% { transform: translateY(0); } 100% { transform: translateY(200px); } }
+        /* Fade in for smooth result display */
         .fade-in { animation: fadeIn 0.5s ease-in; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .nav-link-active { color: #3B82F6; font-weight: bold; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
-
-    <!-- ===================================
-         ADVANCED SCHEMA.ORG MARKUP (JSON-LD)
-         =================================== -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -169,8 +176,6 @@
       ]
     }
     </script>
-
-    <!-- Header & Navigation -->
     <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a href="#scanner" class="text-2xl font-bold text-blue-600 dark:text-blue-400">ScanBarcode.net</a>
@@ -197,8 +202,6 @@
             <a href="#contact" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Kontak</a>
         </div>
     </header>
-
-    <!-- Breadcrumbs -->
     <nav aria-label="Breadcrumb" class="bg-gray-100 dark:bg-gray-800 py-2">
         <ol class="container mx-auto px-4 flex items-center space-x-2 text-sm" itemscope itemtype="https://schema.org/BreadcrumbList">
             <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
@@ -214,68 +217,136 @@
             </li>
         </ol>
     </nav>
-
     <main>
-        <!-- ===================================
-             MAIN SCANNER SECTION
-             =================================== -->
         <section id="scanner" class="container mx-auto px-4 py-12 text-center">
             <h1 class="text-4xl md:text-5xl font-extrabold mb-4 fade-in">Alat Scan Barcode & QR Code Online Terbaik</h1>
             <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 fade-in">Solusi tercepat dan termudah di Indonesia. Scan barcode apa pun secara instan. Gratis, akurat, dan aman.</p>
             <div id="choose-interface" class="max-w-lg mx-auto">
                 <button id="start-camera-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg text-lg">📷 Mulai Scan Kamera</button>
-                <label for="upload-input" class="block mt-4 w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-bold py-4 px-6 rounded-lg text-lg cursor-pointer text-center">📁 Unggah Gambar Barcode</label>
-                <input type="file" id="upload-input" accept="image/*" class="hidden">
-            </div>
-            <div id="scan-result" class="mt-10 max-w-md mx-auto hidden p-5 rounded-xl bg-green-50 dark:bg-green-900 border border-green-300 dark:border-green-700 text-left">
-                <h3 class="font-bold mb-2">Hasil Scan:</h3>
-                <div id="scan-output" class="font-mono text-sm break-all"></div>
-                <div id="scan-links" class="mt-4 space-x-2"></div>
             </div>
         </section>
 
-        <!-- Modal overlay for camera scan -->
         <div id="modal-overlay" class="modal hidden">
-            <div class="scan-box">
-                <video id="scan-video" class="w-full h-full" autoplay playsinline muted></video>
-                <div class="scan-guide"></div>
+            <div class="scan-box bg-gray-900 shadow-2xl p-4 md:p-6 relative">
+                
+                <div id="scanning-view" class="w-full h-full relative">
+                    <video id="scan-video" class="scan-video" autoplay playsinline muted></video>
+                    <div class="scan-overlay">
+                        <div class="scanning-line"></div>
+                    </div>
+                    <div id="scan-status" class="absolute bottom-4 left-0 right-0 text-center text-white font-semibold p-2 bg-gray-800 bg-opacity-70 rounded-b-lg">
+                        🔎 Sedang mencari kode...
+                    </div>
+                </div>
+
+                <div id="modal-result-container" class="hidden w-full h-full absolute inset-0 p-4 md:p-8 flex flex-col justify-between bg-white dark:bg-gray-800 rounded-lg text-left transition-opacity duration-300 opacity-0">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-green-600 dark:text-green-400">✅ Scan Berhasil!</h3>
+                        <button onclick="onScanStop()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 p-1 rounded-full transition">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="flex-grow overflow-auto mb-4 p-3 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                        <p class="font-mono text-sm break-all" id="modal-scan-output"></p>
+                    </div>
+                    <div id="modal-scan-links" class="space-y-3">
+                        </div>
+                </div>
             </div>
             <button id="stop-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-lg">Berhenti</button>
         </div>
-
-        <canvas id="canvas" class="hidden"></canvas>
-
-        <!-- ========== ALL OTHER SECTIONS ARE 100% PRESERVED ========== -->
-        <!-- ...How it works, Supported types, Why us, FAQ, Contact, Footer, etc. unchanged for full SEO value... -->
-
-        <!-- ===================================
-             HOW IT WORKS SECTION
-             =================================== -->
-        <!-- [ ... this section is unchanged ... ] -->
-
-        <!-- ===================================
-             SUPPORTED BARCODE TYPES SECTION
-             =================================== -->
-        <!-- [ ... this section is unchanged ... ] -->
-
-        <!-- ===================================
-             WHY USE OUR SITE SECTION
-             =================================== -->
-        <!-- [ ... this section is unchanged ... ] -->
-
-        <!-- ===================================
-             FAQ SECTION
-             =================================== -->
-        <!-- [ ... this section is unchanged ... ] -->
-
-        <!-- ===================================
-             CONTACT / ABOUT SECTION
-             =================================== -->
-        <!-- [ ... this section is unchanged ... ] -->
-
+        
+        <section id="how-it-works" class="bg-white dark:bg-gray-800 py-12">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Cara Kerja Pemindai Barcode Kami</h2>
+                <p class="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">Melakukan <strong>scan barcode</strong> atau QR code tidak pernah semudah ini. Ikuti empat langkah sederhana ini untuk mendapatkan hasil secara instan.</p>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                    <div class="p-4"><div class="text-5xl mb-4">1️⃣</div><h3 class="font-bold">Buka Situs</h3><p class="text-sm text-gray-600 dark:text-gray-400">Kunjungi ScanBarcode.net dari browser apa pun.</p></div>
+                    <div class="p-4"><div class="text-5xl mb-4">2️⃣</div><h3 class="font-bold">Izinkan Kamera</h3><p class="text-sm text-gray-600 dark:text-gray-400">Klik tombol dan berikan izin akses kamera.</p></div>
+                    <div class="p-4"><div class="text-5xl mb-4">3️⃣</div><h3 class="font-bold">Arahkan & Scan</h3><p class="text-sm text-gray-600 dark:text-gray-400">Arahkan kamera ke kode. Pemindaian otomatis.</p></div>
+                    <div class="p-4"><div class="text-5xl mb-4">4️⃣</div><h3 class="font-bold">Dapatkan Hasil</h3><p class="text-sm text-gray-600 dark:text-gray-400">Lihat hasil, salin teks, atau buka link.</p></div>
+                </div>
+            </div>
+        </section>
+        <section id="supported-types" class="py-12">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <h2 class="text-3xl font-bold text-center mb-8">Jenis Barcode yang Didukung</h2>
+                <p class="text-center text-gray-600 dark:text-gray-400 mb-8">Pemindai <strong>barcode online</strong> kami canggih dan mendukung berbagai jenis kode 1D dan 2D. Apa pun kebutuhan Anda, kami siap membantu.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <article class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold mb-2">QR Code (Quick Response)</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Kode 2D persegi yang populer untuk menyimpan URL, teks, kontak, dan lainnya. Sering digunakan dalam iklan, pembayaran, dan tiket.</p>
+                    </article>
+                    <article class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold mb-2">EAN-13 / EAN-8</h3>
+                        <p class="text-gray-600 dark:text-gray-400">European Article Number, standar global untuk produk ritel. <strong>Scan barcode</strong> ini untuk menemukan informasi produk di toko.</p>
+                    </article>
+                    <article class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold mb-2">UPC-A / UPC-E</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Universal Product Code, standar yang dominan di Amerika Utara untuk produk konsumen.</p>
+                    </article>
+                    <article class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold mb-2">Code 128</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Kode 1D berkepadatan tinggi yang dapat menyimpan semua karakter ASCII. Sering digunakan untuk logistik dan inventaris.</p>
+                    </article>
+                    <article class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold mb-2">Code 39</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Salah satu kode batang tertua, digunakan di berbagai industri seperti otomotif dan pertahanan.</p>
+                    </article>
+                    <article class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold mb-2">Data Matrix & ITF</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Kode 2D (Data Matrix) untuk komponen kecil dan kode 1D (ITF) untuk kemasan kardus. Alat kami mendukungnya semua.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <section id="why-us" class="bg-white dark:bg-gray-800 py-12">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Mengapa ScanBarcode.net adalah Pilihan Terbaik Anda?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="p-6"><div class="text-5xl mb-4">🚀</div><h3 class="text-xl font-bold mb-2">Kecepatan Instant</h3><p class="text-gray-600 dark:text-gray-400">Teknologi terkini memastikan hasil <strong>scan barcode</strong> muncul dalam sepersekian detik.</p></div>
+                    <div class="p-6"><div class="text-5xl mb-4">🛡️</div><h3 class="text-xl font-bold mb-2">Privasi Terjamin</h3><p class="text-gray-600 dark:text-gray-400">Semua proses di browser Anda. Tidak ada data yang dikirim ke server, menjaga informasi Anda 100% pribadi.</p></div>
+                    <div class="p-6"><div class="text-5xl mb-4">📱</div><h3 class="text-xl font-bold mb-2">Akses Universal</h3><p class="text-gray-600 dark:text-gray-400">Berfungsi di semua perangkat dengan kamera—ponsel, tablet, atau desktop—tanpa perlu menginstal aplikasi.</p></div>
+                    <div class="p-6"><div class="text-5xl mb-4">🎯</div><h3 class="text-xl font-bold mb-2">Akurasi Tinggi</h3><p class="text-gray-600 dark:text-gray-400">Mesin pemindai kami andal dan dapat membaca kode bahkan dalam kondisi cahaya yang kurang ideal atau dari sudut yang sulit.</p></div>
+                    <div class="p-6"><div class="text-5xl mb-4">🔄</div><h3 class="text-xl font-bold mb-2">Multi-Format</h3><p class="text-gray-600 dark:text-gray-400">Satu alat untuk semua kebutuhan. Dari QR Code hingga Code 128, kami mendukung puluhan format berbeda.</p></div>
+                    <div class="p-6"><div class="text-5xl mb-4">💡</div><h3 class="text-xl font-bold mb-2">Mudah Digunakan</h3><p class="text-gray-600 dark:text-gray-400">Antarmuka yang bersih dan intuitif memastikan siapa saja, dari pemula hingga ahli, dapat menggunakannya dengan mudah.</p></div>
+                </div>
+            </div>
+        </section>
+        <section id="faq" class="py-12">
+            <div class="container mx-auto px-4 max-w-3xl">
+                <h2 class="text-3xl font-bold text-center mb-8">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+                <div class="space-y-4">
+                    <div class="faq-item bg-white dark:bg-gray-800 p-4 rounded-lg shadow"><button class="faq-question w-full text-left font-bold text-lg flex justify-between items-center"><span>Apakah ScanBarcode.net benar-benar gratis?</span><span class="faq-icon">+</span></button><div class="faq-answer hidden mt-2 text-gray-600 dark:text-gray-400">Ya, 100% gratis. Anda dapat menggunakan pemindai barcode dan QR code kami tanpa biaya tersembunnyii atau batasan.</div></div>
+                    <div class="faq-item bg-white dark:bg-gray-800 p-4 rounded-lg shadow"><button class="faq-question w-full text-left font-bold text-lg flex justify-between items-center"><span>Jenis barcode apa yang bisa dipindai?</span><span class="faq-icon">+</span></button><div class="faq-answer hidden mt-2 text-gray-600 dark:text-gray-400">Pemindai kami mendukung semua format utama, termasuk QR Code, EAN-13, UPC-A, Code 128, Code 39, Data Matrix, ITF, dan banyak lagi.</div></div>
+                    <div class="faq-item bg-white dark:bg-gray-800 p-4 rounded-lg shadow"><button class="faq-question w-full text-left font-bold text-lg flex justify-between items-center"><span>Apakah data saya aman?</span><span class="faq-icon">+</span></button><div class="faq-answer hidden mt-2 text-gray-600 dark:text-gray-400">Sangat aman. Proses pemindaian terjadi sepenuhnya di browser perangkat Anda. Tidak ada gambar atau data barcode yang dikirim ke server kami, jadi privasi Anda terjamin.</div></div>
+                    <div class="faq-item bg-white dark:bg-gray-800 p-4 rounded-lg shadow"><button class="faq-question w-full text-left font-bold text-lg flex justify-between items-center"><span>Mengapa kamera saya tidak berfungsi?</span><span class="faq-icon">+</span></button><div class="faq-answer hidden mt-2 text-gray-600 dark:text-gray-400">Pastikan Anda telah memberikan izin akses kamera ke browser. Jika masih bermasalah, coba gunakan opsi "Unggah Gambar" atau periksa pengaturan kamera di browser Anda.</div></div>
+                    <div class="faq-item bg-white dark:bg-gray-800 p-4 rounded-lg shadow"><button class="faq-question w-full text-left font-bold text-lg flex justify-between items-center"><span>Bisakah saya menggunakan ini di komputer?</span><span class="faq-icon">+</span></button><div class="faq-answer hidden mt-2 text-gray-600 dark:text-gray-400">Ya, asalkan komputer Anda memiliki webcam, Anda dapat menggunakan fitur scan kamera. Opsi "Unggah Gambar" juga tersedia untuk semua perangkat.</div></div>
+                </div>
+            </div>
+        </section>
+        <section id="contact" class="bg-white dark:bg-gray-800 py-12">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <h2 class="text-3xl font-bold text-center mb-8">Tentang ScanBarcode.net - Misi Kami</h2>
+                <div class="prose prose-lg dark:prose-invert mx-auto text-gray-600 dark:text-gray-400">
+                    <p>
+                        Selamat datang di <strong>ScanBarcode.net</strong>, solusi paling depan dan tepercaya untuk semua kebutuhan <strong>scan barcode</strong> dan <strong>QR code</strong> di Indonesia. Kami lahir dari keyakinan bahwa teknologi haruslah sederhana, cepat, dan dapat diakses oleh semua orang. Di era digital di mana informasi berada di ujung jari, kami hadir untuk memastikan Anda tidak pernah lagi kesulitan mengakses data yang terkandung dalam berbagai jenis kode.
+                    </p>
+                    <p>
+                        Alat <strong>pemindai barcode online</strong> kami dirancang dengan fokus pada tiga pilar utama: <strong>Kecepatan, Keamanan, dan Kemudahan</strong>. Kami memahami bahwa waktu Anda berharga, itulah mengapa teknologi kami memberikan hasil secara instan. Kami juga sangat menjaga privasi Anda; dengan proses pemindaian yang berjalan lokal di perangkat Anda, kami menjamin bahwa tidak ada informasi pribadi yang tersimpan atau dibagikan. Cukup buka browser Anda, dan Anda siap untuk <strong>scan barcode</strong> apa pun, kapan saja, di mana saja.
+                    </p>
+                    <p>
+                        Dari pemilik bisnis UMKM yang ingin mengelola inventaris dengan lebih efisien, hingga mahasiswa yang ingin mengunduh materi kuliah dengan cepat, atau bahkan hanya sekadar ingin tahu apa yang ada di balik kode menarik yang Anda temui, ScanBarcode.net adalah jawaban yang andal. Kami secara terus-menerus memperbarui mesin kami untuk mendukung lebih banyak format dan meningkatkan akurasi, menjadikan kami sebagai sumber daya definitif untuk <strong>cara scan barcode</strong> di Indonesia.
+                    </p>
+                </div>
+                <div class="mt-8 text-center">
+                    <p>Tim kami selalu terbuka untuk umpan balik, pertanyaan, atau kolaborasi. Jangan ragu untuk menghubungi kami.</p>
+                    <a href="mailto:info@scanbarcode.net" class="text-blue-600 dark:text-blue-400 hover:underline font-bold">info@scanbarcode.net</a>
+                </div>
+            </div>
+        </section>
     </main>
-
-    <!-- Footer -->
     <footer class="bg-gray-100 dark:bg-gray-900 text-center py-6 border-t dark:border-gray-700">
         <p>&copy; 2024 ScanBarcode.net. Semua Hak Dilindungi.</p>
         <div class="mt-2 space-x-4">
@@ -283,119 +354,174 @@
             <a href="/syarat-dan-ketentuan.html" class="text-sm text-gray-600 dark:text-gray-400 hover:underline">Syarat & Ketentuan</a>
         </div>
     </footer>
-
-    <!-- ===================================
-         JAVASCRIPT LOGIC (SCANNER MODAL)
-         =================================== -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM: Scanner ---
             const startCameraBtn = document.getElementById('start-camera-btn');
-            const uploadInput = document.getElementById('upload-input');
             const modalOverlay = document.getElementById('modal-overlay');
             const scanVideo = document.getElementById('scan-video');
             const stopBtn = document.getElementById('stop-btn');
-            const scanResult = document.getElementById('scan-result');
-            const scanOutput = document.getElementById('scan-output');
-            const scanLinks = document.getElementById('scan-links');
             const chooseInterface = document.getElementById('choose-interface');
-            const canvas = document.getElementById('canvas');
+            
+            // New/Updated Elements
+            const scanningView = document.getElementById('scanning-view');
+            const scanStatus = document.getElementById('scan-status');
+            const modalResultContainer = document.getElementById('modal-result-container');
+            const modalScanOutput = document.getElementById('modal-scan-output');
+            const modalScanLinks = document.getElementById('modal-scan-links');
 
-            // ZXing Barcode Reader
-            let currentStream = null, scanRunning = false, scanTimer = null;
+            let currentStream = null;
             let codeReader = new ZXing.BrowserMultiFormatReader();
+            let scanRunning = false;
 
             function vibrate() { if ('vibrate' in navigator) navigator.vibrate(200); }
             function showModal() { modalOverlay.classList.remove('hidden'); }
             function hideModal() { modalOverlay.classList.add('hidden'); }
-
-            // Camera scan initiation
+            
+            // --- Step 1: Start Camera/Request Permission on button click ---
             startCameraBtn.onclick = async () => {
                 chooseInterface.classList.add('hidden');
+                requestCameraPermission(); // Direct call for best UX
+            };
+
+            async function requestCameraPermission() {
                 showModal();
-                scanResult.classList.add('hidden');
+                scanningView.classList.remove('hidden');
+                modalResultContainer.classList.add('hidden', 'opacity-0');
+                stopBtn.classList.remove('hidden');
+                scanStatus.textContent = '🔎 Kode dhoondh raha hai...';
+
                 try {
+                    // Triggers the browser's permission dialog
                     currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }});
                     scanVideo.srcObject = currentStream;
                     scanVideo.play();
                     scanRunning = true;
-                    scanTimer = setInterval(scanBarcodeFrame, 400);
-                } catch (e) {
-                    alert('Tidak dapat mengakses kamera.');
-                    onScanStop();
-                }
-            };
 
-            // Scan frame repeat and decode
-            async function scanBarcodeFrame() {
-                if (!scanRunning || scanVideo.readyState !== scanVideo.HAVE_ENOUGH_DATA) return;
-                canvas.width = scanVideo.videoWidth;
-                canvas.height = scanVideo.videoHeight;
-                let ctx = canvas.getContext('2d');
-                ctx.drawImage(scanVideo, 0, 0, canvas.width, canvas.height);
-                try {
-                    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    const result = await codeReader.decodeFromImageData(imageData);
-                    onScanSuccess(result.text);
-                } catch (err) { /* not found - ignore */ }
+                    // Start continuous scanning using decodeFromStream
+                    codeReader.decodeFromStream(currentStream, scanVideo, (result, err) => {
+                        if (result) {
+                            // On successful scan: stop, show result in modal
+                            codeReader.reset();
+                            onScanSuccess(result.text);
+                        }
+                        if (err && !(err instanceof ZXing.NotFoundException)) {
+                            // Ignore common 'not found' errors
+                        }
+                    });
+
+                } catch (e) {
+                    // Handle camera permission denial or access error
+                    console.error('Camera Access Error:', e);
+                    alert('Tidak dapat mengakses kamera. Silakan berikan izin akses kamera dari pengaturan browser Anda.');
+                    window.onScanStop();
+                }
             }
 
-            stopBtn.onclick = onScanStop;
-            function onScanStop() {
+            // --- Stop & Reset Function (USED BY CROSS BUTTON) ---
+            // This function is defined globally using 'window.' so that the HTML 'onclick="onScanStop()"' can find it.
+            window.onScanStop = function() { 
+                codeReader.reset();
                 scanRunning = false;
-                clearInterval(scanTimer);
                 hideModal();
                 chooseInterface.classList.remove('hidden');
+                
                 if (currentStream) {
                     currentStream.getTracks().forEach(t => t.stop());
                     scanVideo.srcObject = null;
                     currentStream = null;
                 }
+                // Reset views for next scan
+                scanningView.classList.remove('hidden');
+                modalResultContainer.classList.add('hidden', 'opacity-0');
             }
 
+            // --- Assign Global Function to Stop Button ---
+            // The Stop button (outside the result modal) now explicitly calls the global function.
+            stopBtn.onclick = window.onScanStop;
+
+
+            // --- Success Handler (Result inside modal) ---
             function onScanSuccess(data) {
                 vibrate();
-                onScanStop();
-                scanOutput.textContent = data;
-                scanLinks.innerHTML = "";
-                if (data.startsWith("http") || data.startsWith("www")) {
-                    scanLinks.innerHTML += `<a href="${data}" target="_blank" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">Buka Link</a>`;
+                
+                // 1. Stop scanning process and camera stream
+                codeReader.reset();
+                scanRunning = false;
+                if (currentStream) {
+                    currentStream.getTracks().forEach(t => t.stop());
+                    scanVideo.srcObject = null;
+                    currentStream = null;
                 }
-                scanLinks.innerHTML += `<button onclick="copyResult()" class="bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700">Salin Teks</button>`;
-                scanLinks.innerHTML += `<button onclick="scanAgain()" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700">Scan Lagi</button>`;
-                scanResult.classList.remove('hidden');
+                
+                // 2. Hide scanning view, show result view
+                stopBtn.classList.add('hidden'); 
+                scanningView.classList.add('hidden');
+                
+                // 3. Prepare result container
+                modalScanOutput.textContent = data;
+                modalScanLinks.innerHTML = "";
+                
+                // Action Buttons Logic
+                const isUrl = data.startsWith("http") || data.startsWith("www");
+                const fullUrl = data.startsWith("http") ? data : `https://${data}`;
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(data)}`;
+
+                if (isUrl) {
+                    modalScanLinks.innerHTML += `<a href="${fullUrl}" target="_blank" class="block w-full text-center bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700">🔗 Buka Link</a>`;
+                } else if (data.length >= 8 && data.match(/^\d+$/)) {
+                    // Product Code/ISBN
+                    modalScanLinks.innerHTML += `<a href="${googleSearchUrl}" target="_blank" class="block w-full text-center bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-700">🔍 Cari Produk</a>`;
+                } else {
+                    // Simple text
+                    modalScanLinks.innerHTML += `<a href="${googleSearchUrl}" target="_blank" class="block w-full text-center bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-700">🔍 Cari di Google</a>`;
+                }
+                
+                modalScanLinks.innerHTML += `<button onclick="copyResult()" class="block w-full text-center bg-gray-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-700 mt-2">📋 Salin Teks</button>`;
+                
+                // Scan Lagi button (restarts the process)
+                modalScanLinks.innerHTML += `<button onclick="scanAgain()" class="block w-full text-center bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 mt-2">♻️ Scan Lagi</button>`;
+
+                // 4. Show result container with fade-in effect
+                modalResultContainer.classList.remove('hidden');
+                setTimeout(() => modalResultContainer.classList.remove('opacity-0'), 10);
             }
 
-            window.copyResult = function() {
-                if (!scanOutput.textContent) return;
-                navigator.clipboard.writeText(scanOutput.textContent).then(() => alert('Teks berhasil disalin!'));
-            };
+            // --- Scan Again Logic (Stays in modal) ---
             window.scanAgain = function() {
-                scanResult.classList.add('hidden');
-                chooseInterface.classList.remove('hidden');
+                modalResultContainer.classList.add('hidden', 'opacity-0');
+                requestCameraPermission(); // Restart the full camera process
             };
 
-            // Image upload scan logic
-            uploadInput.onchange = (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-                const img = new Image();
-                img.onload = async () => {
-                    canvas.width = img.width; canvas.height = img.height;
-                    let ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-                    let imageData = ctx.getImageData(0, 0, img.width, img.height);
-                    try {
-                        let res = await codeReader.decodeFromImageData(imageData);
-                        onScanSuccess(res.text);
-                    } catch {
-                        alert("Barcode tidak ditemukan di gambar. Coba foto/barcode yang lebih jelas.");
-                    }
-                };
-                img.src = URL.createObjectURL(file);
+            // --- Global Utility Functions ---
+            window.copyResult = function() {
+                if (!modalScanOutput.textContent) return;
+                navigator.clipboard.writeText(modalScanOutput.textContent).then(() => alert('Teks berhasil disalin!'));
             };
+            
+            // --- Other scripts (FAQ, Dark Mode, Mobile Menu) - Preserved ---
+            document.querySelectorAll('.faq-question').forEach(q => { q.addEventListener('click', () => { const a = q.nextElementSibling; const i = q.querySelector('.faq-icon'); a.classList.toggle('hidden'); i.textContent = a.classList.contains('hidden') ? '+' : '-'; }); });
+        
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            darkModeToggle.addEventListener('click', () => {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.theme = 'light';
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.theme = 'dark';
+                }
+            });
 
-            // === Your previous UI/UX, FAQ, navigation, dark mode etc. all preserved, unchanged ===
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
         });
     </script>
 </body>
