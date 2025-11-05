@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://scanbarcode.net/sitemap.xml
