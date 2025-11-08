@@ -613,397 +613,395 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@zxing/library@latest"></script>
     
-    <!-- Ultra-Advanced Structured Data -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Organization",
+      "@id": "https://scanbarcode.net/#organization",
+      "name": "ScanBarcode.net",
+      "url": "https://scanbarcode.net/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://scanbarcode.net/logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "info@scanbarcode.net",
+        "availableLanguage": ["Indonesian", "English"],
+        "hoursAvailable": "Mo-Fr 09:00-17:00"
+      },
+      "sameAs": [
+        "https://www.facebook.com/scanbarcode",
+        "https://twitter.com/scanbarcode_id",
+        "https://www.instagram.com/scanbarcode_id"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "ID",
+        "addressRegion": "Jakarta",
+        "postalCode": "12345",
+        "streetAddress": "Jl. Sudirman No. 123"
+      },
+      "foundingDate": "2023",
+      "founder": {
+        "@type": "Person",
+        "name": "ScanBarcode Team",
+        "jobTitle": "CEO"
+      },
+      "employee": [
         {
-          "@type": "Organization",
-          "@id": "https://scanbarcode.net/#organization",
-          "name": "ScanBarcode.net",
-          "url": "https://scanbarcode.net/",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://scanbarcode.net/logo.png",
-            "width": 512,
-            "height": 512
-          },
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "contactType": "customer service",
-            "email": "info@scanbarcode.net",
-            "availableLanguage": ["Indonesian", "English"],
-            "hoursAvailable": "Mo-Fr 09:00-17:00"
-          },
-          "sameAs": [
-            "https://www.facebook.com/scanbarcode",
-            "https://twitter.com/scanbarcode_id",
-            "https://www.instagram.com/scanbarcode_id"
-          ],
-          "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "ID",
-            "addressRegion": "Jakarta",
-            "postalCode": "12345",
-            "streetAddress": "Jl. Sudirman No. 123"
-          },
-          "foundingDate": "2023",
-          "founder": {
-            "@type": "Person",
-            "name": "ScanBarcode Team",
-            "jobTitle": "CEO"
-          },
-          "employee": [
-            {
-              "@type": "Person",
-              "name": "John Doe",
-              "jobTitle": "Lead Developer"
-            },
-            {
-              "@type": "Person",
-              "name": "Jane Smith",
-              "jobTitle": "UX Designer"
-            }
-          ],
-          "award": "Best Barcode Scanner App 2023",
-          "brand": {
-            "@type": "Brand",
-            "name": "ScanBarcode"
-          }
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://scanbarcode.net/#website",
-          "url": "https://scanbarcode.net/",
-          "name": "ScanBarcode.net",
-          "description": "Scan barcode & QR code online terbaik di Indonesia. Support QRIS, BPOM, e-wallet. Pemindai tercepat, akurat, & aman.",
-          "publisher": { "@id": "https://scanbarcode.net/#organization" },
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://scanbarcode.net/?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-          },
-          "inLanguage": "id-ID",
-          "isAccessibleForFree": true,
-          "isPartOf": {
-            "@type": "WebSite",
-            "@id": "https://scanbarcode.net/#website"
-          }
-        },
-        {
-          "@type": "WebPage",
-          "@id": "https://scanbarcode.net/#webpage",
-          "url": "https://scanbarcode.net/",
-          "name": "Scan Barcode Online #1 di Indonesia | Pemindai QR Code Tercepat & Terpercaya",
-          "description": "Scan barcode & QR code online terbaik di Indonesia. Support QRIS, BPOM, e-wallet. Pemindai tercepat, akurat, & aman. Tanpa aplikasi. 100% Gratis.",
-          "isPartOf": { "@id": "https://scanbarcode.net/#website" },
-          "about": { "@type":"Thing", "name":"Scan Barcode" },
-          "breadcrumb": { "@id": "https://scanbarcode.net/#breadcrumb" },
-          "mainEntity": {
-            "@type": "SoftwareApplication",
-            "name": "ScanBarcode.net Scanner",
-            "applicationCategory": "UtilityApplication",
-            "operatingSystem": "Any (Web Browser)",
-            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.9",
-              "reviewCount": "1847",
-              "bestRating": "5",
-              "worstRating": "1",
-              "itemReviewed": {
-                "@type": "SoftwareApplication",
-                "name": "ScanBarcode.net Scanner"
-              }
-            },
-            "author": {
-              "@type": "Organization",
-              "name": "ScanBarcode.net"
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "ScanBarcode.net"
-            },
-            "datePublished": "2023-10-15",
-            "dateModified": "2023-10-15",
-            "inLanguage": "id-ID",
-            "isFamilyFriendly": true,
-            "contentRating": "Everyone",
-            "genre": ["Technology", "Utility", "Mobile"],
-            "keywords": "scan barcode, pemindai barcode, qr code scanner, scan barcode online",
-            "license": "https://creativecommons.org/licenses/by/4.0/",
-            "browserRequirements": "Requires JavaScript. Requires HTML5.",
-            "softwareVersion": "2.0",
-            "applicationSubCategory": "Barcode Scanner",
-            "screenshot": "https://scanbarcode.net/screenshot.jpg",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "IDR",
-              "availability": "https://schema.org/InStock",
-              "validFrom": "2023-01-01"
-            },
-            "aggregateOffer": {
-              "@type": "AggregateOffer",
-              "priceCurrency": "IDR",
-              "lowPrice": "0",
-              "highPrice": "0",
-              "offerCount": "1"
-            }
-          },
-          "datePublished": "2023-10-15",
-          "dateModified": "2023-10-15",
-          "lastReviewed": "2023-10-15",
-          "reviewedBy": {
-            "@type": "Organization",
-            "name": "Tech Review Indonesia"
-          }
-        },
-        {
-          "@type": "BreadcrumbList",
-          "@id": "https://scanbarcode.net/#breadcrumb",
-          "itemListElement": [
-            { 
-              "@type": "ListItem", 
-              "position": 1, 
-              "name": "Beranda", 
-              "item": "https://scanbarcode.net/" 
-            }
-          ]
-        },
-        {
-          "@type": "HowTo",
-          "@name": "Cara Scan Barcode dengan ScanBarcode.net",
-          "description": "Panduan langkah demi langkah untuk memindai barcode atau QR code menggunakan kamera ponsel Anda secara online dan gratis.",
-          "image": "https://scanbarcode.net/images/cara-scan-barcode.jpg",
-          "totalTime": "PT1M",
-          "estimatedCost": {
-            "@type": "MonetaryAmount",
-            "currency": "IDR",
-            "value": "0"
-          },
-          "supply": [
-            {
-              "@type": "HowToSupply",
-              "name": "Smartphone dengan kamera"
-            }
-          ],
-          "tool": [
-            {
-              "@type": "HowToTool",
-              "name": "Browser web"
-            }
-          ],
-          "step": [
-            { 
-              "@type": "HowToStep", 
-              "name": "Buka Situs Web", 
-              "text": "Kunjungi ScanBarcode.net di browser ponsel atau komputer Anda.", 
-              "image": "https://scanbarcode.net/images/step-1.jpg",
-              "url": "https://scanbarcode.net/#step1"
-            },
-            { 
-              "@type": "HowToStep", 
-              "name": "Izinkan Akses Kamera", 
-              "text": "Halaman akan otomatis meminta izin kamera. Izinkan browser untuk menggunakan kamera Anda.", 
-              "image": "https://scanbarcode.net/images/step-2.jpg",
-              "url": "https://scanbarcode.net/#step2"
-            },
-            { 
-              "@type": "HowToStep", 
-              "name": "Arahkan ke Barcode", 
-              "text": "Arahkan kamera Anda ke barcode atau QR code. Pemindaian akan terjadi secara otomatis.", 
-              "image": "https://scanbarcode.net/images/step-3.jpg",
-              "url": "https://scanbarcode.net/#step3"
-            },
-            { 
-              "@type": "HowToStep", 
-              "name": "Dapatkan Hasil", 
-              "text": "Hasil akan muncul secara instan. Anda dapat membuka link, menyalin teks, atau mencari di Google.", 
-              "image": "https://scanbarcode.net/images/step-4.jpg",
-              "url": "https://scanbarcode.net/#step4"
-            }
-          ]
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://scanbarcode.net/#faqpage",
-          "mainEntity": [
-            { 
-              "@type": "Question", 
-              "name": "Apakah ScanBarcode.net benar-benar gratis?", 
-              "acceptedAnswer": { 
-                "@type": "Answer", 
-                "text": "Ya, 100% gratis. Anda dapat menggunakan pemindai barcode dan QR code kami tanpa biaya tersembunyi atau batasan." 
-              } 
-            },
-            { 
-              "@type": "Question", 
-              "name": "Jenis barcode apa yang bisa dipindai?", 
-              "acceptedAnswer": { 
-                "@type": "Answer", 
-                "text": "Pemindai kami mendukung semua format utama, termasuk QR Code, EAN-13, UPC-A, Code 128, Code 39, Data Matrix, ITF, dan banyak lagi." 
-              } 
-            },
-            { 
-              "@type": "Question", 
-              "name": "Apakah data saya aman?", 
-              "acceptedAnswer": { 
-                "@type": "Answer", 
-                "text": "Sangat aman. Proses pemindaian terjadi sepenuhnya di browser perangkat Anda. Tidak ada gambar atau data barcode yang dikirim ke server kami, jadi privasi Anda terjamin." 
-              } 
-            },
-            { 
-              "@type": "Question", 
-              "name": "Mengapa kamera saya tidak berfungsi?", 
-              "acceptedAnswer": { 
-                "@type": "Answer", 
-                "text": "Pastikan Anda telah memberikan izin akses kamera ke browser. Jika masih bermasalah, coba gunakan opsi 'Unggah Gambar' atau periksa pengaturan kamera di browser Anda." 
-              } 
-            },
-            { 
-              "@type": "Question", 
-              "name": "Bisakah saya menggunakan ini di komputer?", 
-              "acceptedAnswer": { 
-                "@type": "Answer", 
-                "text": "Ya, asalkan komputer Anda memiliki webcam, Anda dapat menggunakan fitur scan kamera. Opsi 'Unggah Gambar' juga tersedia untuk semua perangkat." 
-              } 
-            }
-          ]
-        },
-        {
-          "@type": "Article",
-          "@id": "https://scanbarcode.net/#article",
-          "headline": "Scan Barcode Online #1 di Indonesia",
-          "description": "Panduan lengkap tentang cara scan barcode dan QR code online di Indonesia dengan ScanBarcode.net",
-          "author": {
-            "@type": "Organization",
-            "name": "ScanBarcode.net"
-          },
-          "publisher": {
-            "@type": "Organization",
-            "name": "ScanBarcode.net",
-            "logo": {
-              "@type": "ImageObject",
-              "url": "https://scanbarcode.net/logo.png"
-            }
-          },
-          "datePublished": "2023-10-15",
-          "dateModified": "2023-10-15",
-          "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://scanbarcode.net/"
-          },
-          "articleSection": "Technology",
-          "wordCount": 2500,
-          "commentCount": 42,
-          "about": [
-            {
-              "@type": "Thing",
-              "name": "Barcode Scanner"
-            },
-            {
-              "@type": "Thing",
-              "name": "QR Code"
-            },
-            {
-              "@type": "Thing",
-              "name": "Mobile Technology"
-            }
-          ]
-        },
-        {
-          "@type": "Service",
-          "@id": "https://scanbarcode.net/#service",
-          "name": "Scan Barcode Service",
-          "description": "Professional barcode and QR code scanning service for Indonesian users",
-          "provider": {
-            "@type": "Organization",
-            "name": "ScanBarcode.net"
-          },
-          "serviceType": "Online Scanning Service",
-          "areaServed": {
-            "@type": "Country",
-            "name": "Indonesia"
-          },
-          "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Scanning Services",
-            "itemListElement": [
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "QR Code Scanning"
-                },
-                "price": "0",
-                "priceCurrency": "IDR"
-              },
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Barcode Scanning"
-                },
-                "price": "0",
-                "priceCurrency": "IDR"
-              }
-            ]
-          },
-          "audience": {
-            "@type": "Audience",
-            "audienceType": "Indonesian smartphone users"
-          }
-        },
-        {
-          "@type": "VideoObject",
-          "@id": "https://scanbarcode.net/#video",
-          "name": "Cara Scan Barcode dengan ScanBarcode.net",
-          "description": "Video tutorial tentang cara menggunakan ScanBarcode.net untuk memindai barcode dan QR code",
-          "thumbnailUrl": "https://scanbarcode.net/video-thumbnail.jpg",
-          "uploadDate": "2023-10-15",
-          "duration": "PT2M30S",
-          "contentUrl": "https://scanbarcode.net/video.mp4",
-          "embedUrl": "https://www.youtube.com/embed/VIDEO_ID",
-          "publisher": {
-            "@type": "Organization",
-            "name": "ScanBarcode.net"
-          }
-        },
-        {
-          "@type": "Review",
-          "@id": "https://scanbarcode.net/#review",
-          "itemReviewed": {
-            "@type": "SoftwareApplication",
-            "name": "ScanBarcode.net Scanner"
-          },
-          "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "5",
-            "bestRating": "5"
-          },
-          "author": {
-            "@type": "Person",
-            "name": "Ahmad Fauzi"
-          },
-          "reviewBody": "Aplikasi scan barcode terbaik yang pernah saya gunakan. Support semua jenis barcode yang ada di Indonesia.",
-          "datePublished": "2023-10-10"
+          "@type": "Person",
+          "name": "John Doe",
+          "jobTitle": "Lead Developer"
         },
         {
           "@type": "Person",
-          "@id": "https://scanbarcode.net/#person",
-          "name": "Ahmad Fauzi",
-          "jobTitle": "Tech Reviewer",
-          "worksFor": {
-            "@type": "Organization",
-            "name": "Tech Review Indonesia"
-          },
-          "sameAs": "https://twitter.com/ahmadfauzi"
+          "name": "Jane Smith",
+          "jobTitle": "UX Designer"
+        }
+      ],
+      "award": "Best Barcode Scanner App 2023",
+      "brand": {
+        "@type": "Brand",
+        "name": "ScanBarcode"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://scanbarcode.net/#website",
+      "url": "https://scanbarcode.net/",
+      "name": "ScanBarcode.net",
+      "description": "Scan barcode & QR code online terbaik di Indonesia. Support QRIS, BPOM, e-wallet. Pemindai tercepat, akurat, & aman.",
+      "publisher": { "@id": "https://scanbarcode.net/#organization" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://scanbarcode.net/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": "id-ID",
+      "isAccessibleForFree": true,
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://scanbarcode.net/#website"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://scanbarcode.net/#webpage",
+      "url": "https://scanbarcode.net/",
+      "name": "Scan Barcode Online #1 di Indonesia | Pemindai QR Code Tercepat & Terpercaya",
+      "description": "Scan barcode & QR code online terbaik di Indonesia. Support QRIS, BPOM, e-wallet. Pemindai tercepat, akurat, & aman. Tanpa aplikasi. 100% Gratis.",
+      "isPartOf": { "@id": "https://scanbarcode.net/#website" },
+      "about": { "@type":"Thing", "name":"Scan Barcode" },
+      "breadcrumb": { "@id": "https://scanbarcode.net/#breadcrumb" },
+      "mainEntity": {
+        "@type": "SoftwareApplication",
+        "name": "ScanBarcode.net Scanner",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any (Web Browser)",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "IDR",
+          "availability": "https://schema.org/InStock",
+          "validFrom": "2023-01-01"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "1847",
+          "bestRating": "5",
+          "worstRating": "1",
+          "itemReviewed": {
+            "@type": "SoftwareApplication",
+            "name": "ScanBarcode.net Scanner"
+          }
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "ScanBarcode.net"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ScanBarcode.net"
+        },
+        "datePublished": "2023-10-15",
+        "dateModified": "2023-10-15",
+        "inLanguage": "id-ID",
+        "isFamilyFriendly": true,
+        "contentRating": "Everyone",
+        "genre": ["Technology", "Utility", "Mobile"],
+        "keywords": "scan barcode, pemindai barcode, qr code scanner, scan barcode online",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "softwareVersion": "2.0",
+        "applicationSubCategory": "Barcode Scanner",
+        "screenshot": "https://scanbarcode.net/screenshot.jpg",
+        "aggregateOffer": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "IDR",
+          "lowPrice": "0",
+          "highPrice": "0",
+          "offerCount": "1"
+        }
+      },
+      "datePublished": "2023-10-15",
+      "dateModified": "2023-10-15",
+      "lastReviewed": "2023-10-15",
+      "reviewedBy": {
+        "@type": "Organization",
+        "name": "Tech Review Indonesia"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://scanbarcode.net/#breadcrumb",
+      "itemListElement": [
+        { 
+          "@type": "ListItem", 
+          "position": 1, 
+          "name": "Beranda", 
+          "item": "https://scanbarcode.net/" 
         }
       ]
+    },
+    {
+      "@type": "HowTo",
+      "@name": "Cara Scan Barcode dengan ScanBarcode.net",
+      "description": "Panduan langkah demi langkah untuk memindai barcode atau QR code menggunakan kamera ponsel Anda secara online dan gratis.",
+      "image": "https://scanbarcode.net/images/cara-scan-barcode.jpg",
+      "totalTime": "PT1M",
+      "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "IDR",
+        "value": "0"
+      },
+      "supply": [
+        {
+          "@type": "HowToSupply",
+          "name": "Smartphone dengan kamera"
+        }
+      ],
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "Browser web"
+        }
+      ],
+      "step": [
+        { 
+          "@type": "HowToStep", 
+          "name": "Buka Situs Web", 
+          "text": "Kunjungi ScanBarcode.net di browser ponsel atau komputer Anda.", 
+          "image": "https://scanbarcode.net/images/step-1.jpg",
+          "url": "https://scanbarcode.net/#step1"
+        },
+        { 
+          "@type": "HowToStep", 
+          "name": "Izinkan Akses Kamera", 
+          "text": "Halaman akan otomatis meminta izin kamera. Izinkan browser untuk menggunakan kamera Anda.", 
+          "image": "https://scanbarcode.net/images/step-2.jpg",
+          "url": "https://scanbarcode.net/#step2"
+        },
+        { 
+          "@type": "HowToStep", 
+          "name": "Arahkan ke Barcode", 
+          "text": "Arahkan kamera Anda ke barcode atau QR code. Pemindaian akan terjadi secara otomatis.", 
+          "image": "https://scanbarcode.net/images/step-3.jpg",
+          "url": "https://scanbarcode.net/#step3"
+        },
+        { 
+          "@type": "HowToStep", 
+          "name": "Dapatkan Hasil", 
+          "text": "Hasil akan muncul secara instan. Anda dapat membuka link, menyalin teks, atau mencari di Google.", 
+          "image": "https://scanbarcode.net/images/step-4.jpg",
+          "url": "https://scanbarcode.net/#step4"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://scanbarcode.net/#faqpage",
+      "mainEntity": [
+        { 
+          "@type": "Question", 
+          "name": "Apakah ScanBarcode.net benar-benar gratis?", 
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Ya, 100% gratis. Anda dapat menggunakan pemindai barcode dan QR code kami tanpa biaya tersembunyi atau batasan." 
+          } 
+        },
+        { 
+          "@type": "Question", 
+          "name": "Jenis barcode apa yang bisa dipindai?", 
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Pemindai kami mendukung semua format utama, termasuk QR Code, EAN-13, UPC-A, Code 128, Code 39, Data Matrix, ITF, dan banyak lagi." 
+          } 
+        },
+        { 
+          "@type": "Question", 
+          "name": "Apakah data saya aman?", 
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Sangat aman. Proses pemindaian terjadi sepenuhnya di browser perangkat Anda. Tidak ada gambar atau data barcode yang dikirim ke server kami, jadi privasi Anda terjamin." 
+          } 
+        },
+        { 
+          "@type": "Question", 
+          "name": "Mengapa kamera saya tidak berfungsi?", 
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Pastikan Anda telah memberikan izin akses kamera ke browser. Jika masih bermasalah, coba gunakan opsi 'Unggah Gambar' atau periksa pengaturan kamera di browser Anda." 
+          } 
+        },
+        { 
+          "@type": "Question", 
+          "name": "Bisakah saya menggunakan ini di komputer?", 
+          "acceptedAnswer": { 
+            "@type": "Answer", 
+            "text": "Ya, asalkan komputer Anda memiliki webcam, Anda dapat menggunakan fitur scan kamera. Opsi 'Unggah Gambar' juga tersedia untuk semua perangkat." 
+          } 
+        }
+      ]
+    },
+    {
+      "@type": "Article",
+      "@id": "https://scanbarcode.net/#article",
+      "headline": "Scan Barcode Online #1 di Indonesia",
+      "description": "Panduan lengkap tentang cara scan barcode dan QR code online di Indonesia dengan ScanBarcode.net",
+      "author": {
+        "@type": "Organization",
+        "name": "ScanBarcode.net"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ScanBarcode.net",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://scanbarcode.net/logo.png"
+        }
+      },
+      "datePublished": "2023-10-15",
+      "dateModified": "2023-10-15",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://scanbarcode.net/"
+      },
+      "articleSection": "Technology",
+      "wordCount": 2500,
+      "commentCount": 42,
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Barcode Scanner"
+        },
+        {
+          "@type": "Thing",
+          "name": "QR Code"
+        },
+        {
+          "@type": "Thing",
+          "name": "Mobile Technology"
+        }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://scanbarcode.net/#service",
+      "name": "Scan Barcode Service",
+      "description": "Professional barcode and QR code scanning service for Indonesian users",
+      "provider": {
+        "@type": "Organization",
+        "name": "ScanBarcode.net"
+      },
+      "serviceType": "Online Scanning Service",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Indonesia"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Scanning Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "QR Code Scanning"
+            },
+            "price": "0",
+            "priceCurrency": "IDR"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Barcode Scanning"
+            },
+            "price": "0",
+            "priceCurrency": "IDR"
+          }
+        ]
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Indonesian smartphone users"
+      }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://scanbarcode.net/#video",
+      "name": "Cara Scan Barcode dengan ScanBarcode.net",
+      "description": "Video tutorial tentang cara menggunakan ScanBarcode.net untuk memindai barcode dan QR code",
+      "thumbnailUrl": "https://scanbarcode.net/video-thumbnail.jpg",
+      "uploadDate": "2023-10-15",
+      "duration": "PT2M30S",
+      "contentUrl": "https://scanbarcode.net/video.mp4",
+      "embedUrl": "https://www.youtube.com/embed/VIDEO_ID",
+      "publisher": {
+        "@type": "Organization",
+        "name": "ScanBarcode.net"
+      }
+    },
+    {
+      "@type": "Review",
+      "@id": "https://scanbarcode.net/#review",
+      "itemReviewed": {
+        "@type": "SoftwareApplication",
+        "name": "ScanBarcode.net Scanner"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Ahmad Fauzi"
+      },
+      "reviewBody": "Aplikasi scan barcode terbaik yang pernah saya gunakan. Support semua jenis barcode yang ada di Indonesia.",
+      "datePublished": "2023-10-10"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://scanbarcode.net/#person",
+      "name": "Ahmad Fauzi",
+      "jobTitle": "Tech Reviewer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Tech Review Indonesia"
+      },
+      "sameAs": "https://twitter.com/ahmadfauzi"
     }
-    </script>
+  ]
+}
+</script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
     <!-- Skip to content link for accessibility -->
