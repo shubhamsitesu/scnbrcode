@@ -29,7 +29,6 @@
     <meta name="msapplication-navbutton-color" content="#3B82F6">
     <meta name="apple-mobile-web-app-status-bar-style" content="#3B82F6">
     
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://scanbarcode.net/">
     <meta property="og:title" content="Scan Barcode Online #1 di Indonesia | Pemindai QR Code Tercepat & Terpercaya">
@@ -41,7 +40,6 @@
     <meta property="og:locale" content="id_ID">
     <meta property="og:site_name" content="ScanBarcode.net">
     
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://scanbarcode.net/">
     <meta property="twitter:title" content="Scan Barcode Online #1 di Indonesia | Pemindai QR Code Tercepat & Terpercaya">
@@ -51,565 +49,37 @@
     <meta property="twitter:creator" content="@scanbarcode_id">
     <meta property="twitter:site" content="@scanbarcode_id">
     
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://scanbarcode.net/" />
     
-    <!-- Hreflang Tags -->
     <link rel="alternate" hreflang="id" href="https://scanbarcode.net/" />
     <link rel="alternate" hreflang="en" href="https://scanbarcode.net/en/" />
     <link rel="alternate" hreflang="x-default" href="https://scanbarcode.net/" />
     
-    <!-- Preconnect to External Domains -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://unpkg.com">
     <link rel="preconnect" href="https://www.google-analytics.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <!-- Preload Critical Resources -->
     <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
     <link rel="preload" href="https://unpkg.com/@zxing/library@latest" as="script">
     <link rel="preload" href="/og-image.jpg" as="image">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
     
-    <!-- DNS Prefetch -->
     <link rel="dns-prefetch" href="//www.google-analytics.com">
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//connect.facebook.net">
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
     
-    <!-- Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/manifest.json">
     
-    <!-- Critical CSS Inlined -->
-    <style>
-        :root {
-            --primary-color: #3B82F6;
-            --secondary-color: #38bdf8;
-            --text-color: #1f2937;
-            --bg-color: #f9fafb;
-        }
-        
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-        
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        
-        .dark body {
-            background-color: #111827;
-            color: #f9fafb;
-        }
-        
-        .scan-box {
-            position: relative;
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-            aspect-ratio: 1 / 1;
-            border-radius: 1.5em; 
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        .scan-video {
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
-        
-        .scan-overlay {
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            box-sizing: border-box;
-            background: 
-                linear-gradient(to right, #3B82F6 6px, transparent 6px) 0 0,
-                linear-gradient(to left, #3B82F6 6px, transparent 6px) 100% 0,
-                linear-gradient(to bottom, #3B82F6 6px, transparent 6px) 0 0,
-                linear-gradient(to bottom, #3B82F6 6px, transparent 6px) 100% 0,
-                linear-gradient(to right, #3B82F6 6px, transparent 6px) 0 100%,
-                linear-gradient(to left, #3B82F6 6px, transparent 6px) 100% 100%,
-                linear-gradient(to top, #3B82F6 6px, transparent 6px) 0 100%,
-                linear-gradient(to top, #3B82F6 6px, transparent 6px) 100% 100%;
-            background-repeat: no-repeat;
-            background-size: 30px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .scanning-line {
-            position: absolute;
-            left: 0; right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #3B82F6 0%, #38bdf8 100%);
-            border-radius: 2px;
-            animation: scanline 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        
-        @keyframes scanline {
-            0%   { top: 10%; opacity: 0.5; }
-            50%  { opacity: 1; }
-            100% { top: 90%; opacity: 0.5; }
-        }
-        
-        .scanner-controls {
-            position: absolute;
-            bottom: 15px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .scanner-control-btn {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 4px 8px;
-            min-width: 55px;
-        }
-
-        .scanner-control-btn:hover {
-            background-color: rgba(0, 0, 0, 0.9);
-            transform: translateY(-2px);
-        }
-
-        .scanner-control-btn .icon-wrapper {
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1px;
-        }
-
-        .scanner-control-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .scanner-control-btn .control-label {
-            font-size: 0.65rem;
-            font-weight: 500;
-            line-height: 1;
-        }
-
-        .torch-active { 
-            background-color: #3B82F6;
-            box-shadow: 0 0 10px 3px #3B82F6;
-        }
-
-        #result-container {
-             width: 100%;
-             max-width: 480px;
-             margin: 0 auto;
-             padding: 1.5rem;
-             background-color: white;
-             border-radius: 1.5em;
-             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        .dark #result-container {
-            background-color: #1f2937;
-        }
-
-        .fade-in { animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .nav-link-active { color: #3B82F6; font-weight: bold; }
-        
-        .content-section {
-            padding: 3rem 0;
-        }
-        
-        .feature-card {
-            transition: all 0.3s ease;
-            border-radius: 1rem;
-            overflow: hidden;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        .testimonial {
-            background-color: #f9fafb;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid #3B82F6;
-        }
-        
-        .dark .testimonial {
-            background-color: #374151;
-            color: #f9fafb;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        
-        .how-to-step {
-            position: relative;
-            padding-left: 3rem;
-            margin-bottom: 2rem;
-        }
-        
-        .step-number {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 2.5rem;
-            height: 2.5rem;
-            background-color: #3B82F6;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        
-        .benefit-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-        
-        .benefit-icon {
-            flex-shrink: 0;
-            width: 2rem;
-            height: 2rem;
-            background-color: #3B82F6;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            font-weight: bold;
-        }
-        
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-        }
-        
-        .comparison-table th, .comparison-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        .comparison-table th {
-            background-color: #f3f4f6;
-            font-weight: 600;
-        }
-        
-        .dark .comparison-table th {
-            background-color: #374151;
-            color: #f9fafb;
-        }
-        
-        .dark .comparison-table td {
-            color: #f9fafb;
-        }
-        
-        .comparison-table tr:hover {
-            background-color: #f9fafb;
-        }
-        
-        .dark .comparison-table tr:hover {
-            background-color: #1f2937;
-        }
-        
-        .highlight-box {
-            background-color: #eff6ff;
-            border-left: 4px solid #3B82F6;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0.5rem;
-        }
-        
-        .dark .highlight-box {
-            background-color: #1e3a8a;
-            color: #f9fafb;
-        }
-        
-        .cta-button {
-            background: linear-gradient(135deg, #3B82F6 0%, #38bdf8 100%);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        
-        .loading-spinner {
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid #3B82F6;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background-color: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #3B82F6 0%, #38bdf8 100%);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-        
-        /* Correct image styling - removed loading: lazy from CSS */
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-        
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-        }
-        
-        /* Performance optimizations */
-        .will-change-transform {
-            will-change: transform;
-        }
-        
-        .gpu-accelerated {
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            perspective: 1000px;
-        }
-        
-        /* Accessibility improvements */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
-        
-        /* Focus styles for accessibility */
-        *:focus {
-            outline: 2px solid #3B82F6;
-            outline-offset: 2px;
-        }
-        
-        /* Skip to content link for accessibility */
-        .skip-to-content {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: #3B82F6;
-            color: white;
-            padding: 8px;
-            z-index: 100;
-            transition: top 0.3s;
-        }
-        
-        .skip-to-content:focus {
-            top: 0;
-        }
-        
-        /* Dark mode text color fixes */
-        .dark .text-gray-600 {
-            color: #d1d5db !important;
-        }
-        
-        .dark .text-gray-800 {
-            color: #f9fafb !important;
-        }
-        
-        .dark .text-gray-400 {
-            color: #9ca3af !important;
-        }
-        
-        .dark .text-gray-500 {
-            color: #6b7280 !important;
-        }
-        
-        .dark .text-gray-700 {
-            color: #e5e7eb !important;
-        }
-        
-        .dark .bg-gray-50 {
-            background-color: #111827 !important;
-        }
-        
-        .dark .bg-gray-100 {
-            background-color: #1f2937 !important;
-        }
-        
-        .dark .bg-gray-200 {
-            background-color: #374151 !important;
-        }
-        
-        .dark .bg-gray-300 {
-            background-color: #4b5563 !important;
-        }
-        
-        .dark .bg-gray-700 {
-            background-color: #374151 !important;
-        }
-        
-        .dark .bg-gray-800 {
-            background-color: #1f2937 !important;
-        }
-        
-        .dark .bg-gray-900 {
-            background-color: #111827 !important;
-        }
-        
-        .dark .border-gray-700 {
-            border-color: #374151 !important;
-        }
-        
-        .dark .border-gray-200 {
-            border-color: #374151 !important;
-        }
-        
-        .dark .border-gray-300 {
-            border-color: #4b5563 !important;
-        }
-        
-        .dark .hover\:bg-gray-100:hover {
-            background-color: #374151 !important;
-        }
-        
-        .dark .hover\:bg-gray-200:hover {
-            background-color: #4b5563 !important;
-        }
-        
-        .dark .hover\:bg-gray-300:hover {
-            background-color: #4b5563 !important;
-        }
-        
-        .dark .hover\:bg-gray-600:hover {
-            background-color: #4b5563 !important;
-        }
-        
-        .dark .hover\:bg-gray-700:hover {
-            background-color: #4b5563 !important;
-        }
-        
-        .dark .hover\:text-blue-400:hover {
-            color: #60a5fa !important;
-        }
-        
-        .dark .hover\:text-blue-600:hover {
-            color: #3b82f6 !important;
-        }
-        
-        .dark .text-blue-600 {
-            color: #3b82f6 !important;
-        }
-        
-        .dark .text-blue-400 {
-            color: #60a5fa !important;
-        }
-        
-        .dark .text-green-600 {
-            color: #34d399 !important;
-        }
-        
-        .dark .text-green-400 {
-            color: #4ade80 !important;
-        }
-        
-        .dark .text-yellow-600 {
-            color: #fbbf24 !important;
-        }
-        
-        .dark .text-yellow-500 {
-            color: #f59e0b !important;
-        }
-        
-        .dark .text-red-500 {
-            color: #ef4444 !important;
-        }
-        
-        .dark .text-white {
-            color: #ffffff !important;
-        }
-        
-        .dark .shadow-md {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
-        }
-        
-        .dark .shadow-lg {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
-        }
-        
-        .dark .shadow-xl {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
-        }
-        
-        .dark .shadow-2xl {
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4) !important;
-        }
-        
-        .dark .shadow {
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2) !important;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
     
-    <!-- Non-Critical CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@zxing/library@latest"></script>
     
@@ -1004,10 +474,8 @@
 </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
-    <!-- Skip to content link for accessibility -->
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
     
-    <!-- Header with Advanced Navigation -->
     <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 no-print">
         <nav class="container mx-auto px-4 py-4 flex justify-between items-center" role="navigation" aria-label="Main navigation">
             <a href="#scanner" class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center" aria-label="ScanBarcode.net Home">
@@ -1044,7 +512,6 @@
         </div>
     </header>
     
-    <!-- Breadcrumb Navigation -->
     <nav aria-label="Breadcrumb" class="bg-gray-100 dark:bg-gray-800 py-2 no-print">
         <ol class="container mx-auto px-4 flex items-center space-x-2 text-sm" itemscope itemtype="https://schema.org/BreadcrumbList">
             <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
@@ -1062,8 +529,7 @@
     </nav>
     
     <main id="main-content">
-        <!-- Hero Section with Ultra-Advanced SEO Content -->
-            <section id="scanner" class="container mx-auto px-4 py-12 text-center flex flex-col-reverse md:flex-col lg:flex-col-reverse">
+        <section id="scanner" class="container mx-auto px-4 py-12 text-center flex flex-col-reverse md:flex-col lg:flex-col-reverse">
             
             <div class="intro-text">
                 <h1 class="text-4xl md:text-5xl font-extrabold mb-4 fade-in">
@@ -1073,7 +539,6 @@
                     Solusi scan barcode & QR code terpercaya di Indonesia. Support QRIS, BPOM, e-wallet. Pemindai tercepat, akurat, & aman. Tanpa aplikasi. 100% Gratis.
                 </p>
                 
-                <!-- Ultra-Advanced SEO Content -->
                 <div class="mb-8 text-left max-w-3xl mx-auto">
                     <h2 class="text-2xl font-bold mb-4">Mengapa ScanBarcode.net adalah Pilihan Terbaik untuk Scan Barcode di Indonesia?</h2>
                     <p class="mb-4">
@@ -1094,7 +559,6 @@
                     </div>
                 </div>
                 
-                <!-- Statistics Section -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <div class="stat-card">
                         <div class="text-3xl font-bold">10K+</div>
@@ -1116,6 +580,7 @@
             </div>
 
             <div class="scanner-wrapper">
+                <p id="upload-error" class="text-red-500 text-center mb-4 hidden"></p>
                 <div id="choose-interface" class="max-w-lg mx-auto hidden"> 
                     <button id="start-camera-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg text-lg transition-all transform hover:scale-105">
                         📷 Mulai Scan Kamera
@@ -1165,7 +630,6 @@
             </div>
         </section>
 
-        <!-- Ultra-Advanced Content Section for SEO -->
         <section class="content-section bg-white dark:bg-gray-800 py-12">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-8">Panduan Lengkap Cara Scan Barcode di Indonesia</h2>
@@ -1217,7 +681,6 @@
                     </div>
                 </div>
                 
-                <!-- Comparison Table -->
                 <div class="mt-12">
                     <h3 class="text-2xl font-bold mb-6 text-center">ScanBarcode.net vs Aplikasi Scan Barcode Lainnya</h3>
                     <div class="overflow-x-auto">
@@ -1267,7 +730,6 @@
             </div>
         </section>
 
-        <!-- How It Works Section -->
         <section id="how-it-works" class="bg-white dark:bg-gray-800 py-12">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-8">Cara Kerja Pemindai Barcode Kami</h2>
@@ -1295,7 +757,6 @@
                     </div>
                 </div>
                 
-                <!-- Advanced How-To Steps -->
                 <div class="mt-12 max-w-3xl mx-auto">
                     <h3 class="text-2xl font-bold mb-6">Panduan Detail Scan Barcode</h3>
                     <div class="space-y-6">
@@ -1339,7 +800,6 @@
             </div>
         </section>
         
-        <!-- Supported Types Section -->
         <section id="supported-types" class="py-12">
             <div class="container mx-auto px-4 max-w-4xl">
                 <h2 class="text-3xl font-bold text-center mb-8">Jenis Barcode yang Didukung</h2>
@@ -1373,7 +833,6 @@
             </div>
         </section>
         
-        <!-- Why Us Section -->
         <section id="why-us" class="bg-white dark:bg-gray-800 py-12">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-8">Mengapa ScanBarcode.net adalah Pilihan Terbaik Anda?</h2>
@@ -1412,7 +871,6 @@
             </div>
         </section>
         
-        <!-- Testimonials Section -->
         <section class="content-section py-12">
             <div class="container mx-auto px-4 max-w-4xl">
                 <h2 class="text-3xl font-bold text-center mb-8">Apa Kata Pengguna Kami di Indonesia</h2>
@@ -1441,7 +899,6 @@
             </div>
         </section>
         
-        <!-- FAQ Section -->
         <section id="faq" class="py-12">
             <div class="container mx-auto px-4 max-w-3xl">
                 <h2 class="text-3xl font-bold text-center mb-8">Pertanyaan yang Sering Diajukan (FAQ)</h2>
@@ -1495,7 +952,6 @@
             </div>
         </section>
         
-        <!-- Contact Section -->
         <section id="contact" class="bg-white dark:bg-gray-800 py-12">
             <div class="container mx-auto px-4 max-w-4xl">
                 <h2 class="text-3xl font-bold text-center mb-8">Tentang ScanBarcode.net - Misi Kami</h2>
@@ -1518,7 +974,6 @@
         </section>
     </main>
     
-    <!-- Footer -->
     <footer class="bg-gray-100 dark:bg-gray-900 text-center py-6 border-t dark:border-gray-700 no-print">
         <p>&copy; 2025 ScanBarcode.net. Semua Hak Dilindungi.</p>
         <div class="mt-2 space-x-4">
@@ -1527,362 +982,6 @@
         </div>
     </footer>
 
-    <!-- Ultra-Advanced JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Element References
-            const startCameraBtn = document.getElementById('start-camera-btn');
-            const scanVideo = document.getElementById('scan-video');
-            const chooseInterface = document.getElementById('choose-interface');
-            const permissionError = document.getElementById('permission-error');
-            
-            const scanningView = document.getElementById('scanning-view');
-            const resultContainer = document.getElementById('result-container');
-            const scanOutput = document.getElementById('scan-output');
-            const scanLinks = document.getElementById('scan-links');
-
-            // Controls
-            const torchBtn = document.getElementById('torch-btn');
-            const uploadImageBtn = document.getElementById('upload-image-btn');
-            const imageUploadInput = document.getElementById('image-upload-input');
-
-            let currentStream = null;
-            let codeReader = new ZXing.BrowserMultiFormatReader();
-            let scanRunning = false;
-            let isTorchOn = false;
-
-            // Performance monitoring
-            const performanceObserver = new PerformanceObserver((list) => {
-                for (const entry of list.getEntries()) {
-                    if (entry.entryType === 'measure') {
-                        console.log(`${entry.name}: ${entry.duration}ms`);
-                    }
-                }
-            });
-            performanceObserver.observe({ entryTypes: ['measure'] });
-
-            // Analytics and Performance Tracking
-            function trackEvent(eventName, parameters = {}) {
-                // Google Analytics 4 event tracking
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', eventName, parameters);
-                }
-                
-                // Custom analytics
-                console.log('Event tracked:', eventName, parameters);
-                
-                // Performance mark
-                performance.mark(`${eventName}_start`);
-            }
-
-            function vibrate() { 
-                if ('vibrate' in navigator) {
-                    navigator.vibrate(200);
-                }
-            }
-            
-            async function requestCameraPermission() {
-                performance.mark('camera_request_start');
-                stopAll(); // Stop previous streams
-                
-                // UI Reset
-                chooseInterface.classList.add('hidden');
-                resultContainer.classList.add('hidden');
-                scanningView.classList.remove('hidden');
-                permissionError.classList.add('hidden');
-
-                try {
-                    // Use "environment" (back camera) only
-                    const constraints = { 
-                        video: { 
-                            facingMode: "environment",
-                            width: { ideal: 1280 },
-                            height: { ideal: 720 }
-                        } 
-                    };
-                    currentStream = await navigator.mediaDevices.getUserMedia(constraints);
-                    scanVideo.srcObject = currentStream;
-                    
-                    scanRunning = true;
-                    trackEvent('camera_started', { method: 'auto' });
-                    performance.mark('camera_started');
-
-                    // --- Torch Capability Check ---
-                    const track = currentStream.getVideoTracks()[0];
-                    const capabilities = track.getCapabilities();
-                    
-                    if (capabilities.torch) {
-                        // Show button only if device supports torch
-                        torchBtn.classList.remove('hidden');
-                    } else {
-                        torchBtn.classList.add('hidden');
-                    }
-                    // --- End Torch Check ---
-
-                    // Fix for "video already playing" by letting the library handle playback
-                    codeReader.decodeFromStream(currentStream, scanVideo, (result, err) => {
-                        if (result) {
-                            codeReader.reset();
-                            onScanSuccess(result.text);
-                        }
-                    });
-
-                } catch (e) {
-                    console.error('Camera Access Error:', e);
-                    trackEvent('camera_error', { error: e.message });
-                    stopAll();
-                    chooseInterface.classList.remove('hidden');
-                    permissionError.classList.remove('hidden');
-                    scanningView.classList.add('hidden');
-                }
-                
-                performance.measure('camera_request_time', 'camera_request_start', 'camera_started');
-            }
-
-            function stopAll() { 
-                codeReader.reset();
-                scanRunning = false;
-                
-                if (currentStream) {
-                    // Turn off torch before stopping stream
-                    const track = currentStream.getVideoTracks()[0];
-                    if (track && track.getCapabilities().torch && isTorchOn) {
-                        track.applyConstraints({ advanced: [{ torch: false }] });
-                    }
-                    
-                    currentStream.getTracks().forEach(t => t.stop());
-                    scanVideo.srcObject = null;
-                    currentStream = null;
-                }
-                
-                scanningView.classList.add('hidden');
-                resultContainer.classList.add('hidden');
-                
-                // Reset torch state and button
-                torchBtn.classList.add('hidden');
-                torchBtn.classList.remove('torch-active');
-                isTorchOn = false;
-            }
-
-            function onScanSuccess(data) {
-                performance.mark('scan_success_start');
-                vibrate();
-                trackEvent('scan_success', { data_length: data.length });
-                stopAll(); // Stop scanning and camera
-                
-                scanOutput.textContent = data;
-                scanLinks.innerHTML = "";
-                
-                const isUrl = data.startsWith("http") || data.startsWith("www");
-                const fullUrl = data.startsWith("http") ? data : `https://${data}`;
-                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(data)}`;
-                const bpomUrl = `https://cekbpom.pom.go.id/${encodeURIComponent(data)}`;
-
-                if (isUrl) {
-                    scanLinks.innerHTML += `<a href="${fullUrl}" target="_blank" class="block w-full text-center bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105">🔗 Buka Link</a>`;
-                } else if (data.length >= 8 && data.match(/^\d+$/)) {
-                    scanLinks.innerHTML += `<a href="${googleSearchUrl}" target="_blank" class="block w-full text-center bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-700 transition-all transform hover:scale-105">🔍 Cari Produk</a>`;
-                    scanLinks.innerHTML += `<a href="${bpomUrl}" target="_blank" class="block w-full text-center bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-all transform hover:scale-105 mt-2">🏥 Cek BPOM</a>`;
-                } else {
-                    scanLinks.innerHTML += `<a href="${googleSearchUrl}" target="_blank" class="block w-full text-center bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-700 transition-all transform hover:scale-105">🔍 Cari di Google</a>`;
-                }
-                
-                scanLinks.innerHTML += `<button onclick="copyResult()" class="block w-full text-center bg-gray-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-700 transition-all transform hover:scale-105 mt-2">📋 Salin Teks</button>`;
-                scanLinks.innerHTML += `<button onclick="scanAgain()" class="block w-full text-center bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-all transform hover:scale-105 mt-2">♻️ Scan Lagi</button>`;
-
-                resultContainer.classList.remove('hidden');
-                performance.mark('scan_success_end');
-                performance.measure('scan_processing_time', 'scan_success_start', 'scan_success_end');
-            }
-
-            // --- Torch Button Click Handler ---
-            torchBtn.onclick = () => {
-                if (!currentStream) return;
-                
-                isTorchOn = !isTorchOn; // Toggle state
-                const track = currentStream.getVideoTracks()[0];
-                
-                // Apply constraints to toggle torch
-                track.applyConstraints({
-                    advanced: [{ torch: isTorchOn }]
-                });
-                
-                // Update button style
-                torchBtn.classList.toggle('torch-active', isTorchOn);
-                trackEvent('torch_toggled', { state: isTorchOn });
-            };
-
-            // --- Scan from Image File ---
-            uploadImageBtn.onclick = () => {
-                imageUploadInput.click();
-                trackEvent('upload_clicked');
-            };
-
-            imageUploadInput.addEventListener('change', async (event) => {
-                const file = event.target.files[0];
-                if (!file) return;
-
-                stopAll(); // Stop camera
-                scanningView.classList.add('hidden');
-                resultContainer.classList.add('hidden');
-
-                try {
-                    const imageUrl = URL.createObjectURL(file);
-                    const image = new Image();
-                    image.src = imageUrl;
-                    image.onload = async () => {
-                        const result = await codeReader.decodeFromImageElement(image);
-                        if (result) {
-                            onScanSuccess(result.text);
-                            trackEvent('image_scan_success', { file_size: file.size });
-                        } else {
-                            alert('Tidak dapat menemukan barcode/QR code di gambar ini.');
-                            trackEvent('image_scan_failed', { reason: 'no_code_found' });
-                            scanAgain();
-                        }
-                        URL.revokeObjectURL(imageUrl); // Free memory
-                    };
-                } catch (e) {
-                    console.error('Image Scan Error:', e);
-                    alert('Terjadi kesalahan saat memproses gambar.');
-                    trackEvent('image_scan_error', { error: e.message });
-                    scanAgain();
-                }
-            });
-
-            // Global functions
-            window.scanAgain = function() {
-                resultContainer.classList.add('hidden');
-                requestCameraPermission(); // Restart full camera process
-                trackEvent('scan_again');
-            };
-
-            window.copyResult = function() {
-                if (!scanOutput.textContent) return;
-                navigator.clipboard.writeText(scanOutput.textContent).then(() => {
-                    alert('Teks berhasil disalin!');
-                    trackEvent('text_copied');
-                }).catch(err => {
-                    console.error('Failed to copy text: ', err);
-                });
-            };
-            
-            startCameraBtn.onclick = () => {
-                requestCameraPermission();
-                trackEvent('start_camera_clicked');
-            };
-
-            // --- AUTO-START THE SCANNER ON PAGE LOAD ---
-            requestCameraPermission();
-
-            // --- Other UI Scripts (FAQ, Dark Mode, Mobile Menu) ---
-            document.querySelectorAll('.faq-question').forEach(q => { 
-                q.addEventListener('click', () => { 
-                    const a = q.nextElementSibling; 
-                    const i = q.querySelector('.faq-icon'); 
-                    a.classList.toggle('hidden'); 
-                    i.textContent = a.classList.contains('hidden') ? '+' : '-';
-                    q.setAttribute('aria-expanded', a.classList.contains('hidden') ? 'false' : 'true');
-                    trackEvent('faq_toggled', { question: q.querySelector('span').textContent });
-                }); 
-            });
-        
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-            darkModeToggle.addEventListener('click', () => {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.theme = 'light';
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.theme = 'dark';
-                }
-                trackEvent('dark_mode_toggled', { state: document.documentElement.classList.contains('dark') });
-            });
-
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                trackEvent('mobile_menu_toggled');
-            });
-            
-            // Service Worker Registration
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('SW registered');
-                        trackEvent('service_worker_registered');
-                    })
-                    .catch(error => {
-                        console.log('SW registration failed');
-                        trackEvent('service_worker_error', { error: error.message });
-                    });
-            }
-            
-            // Intersection Observer for lazy loading animations
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-            
-            document.querySelectorAll('.feature-card, .testimonial, .stat-card').forEach(el => {
-                observer.observe(el);
-            });
-            
-            // Page visibility API to pause/resume scanning
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    if (scanRunning) {
-                        codeReader.reset();
-                    }
-                } else {
-                    if (scanRunning && currentStream) {
-                        codeReader.decodeFromStream(currentStream, scanVideo, (result, err) => {
-                            if (result) {
-                                codeReader.reset();
-                                onScanSuccess(result.text);
-                            }
-                        });
-                    }
-                }
-            });
-            
-            // Network status detection
-            window.addEventListener('online', () => {
-                trackEvent('network_status_changed', { status: 'online' });
-            });
-            
-            window.addEventListener('offline', () => {
-                trackEvent('network_status_changed', { status: 'offline' });
-            });
-            
-            // Core Web Vitals monitoring
-            import('https://unpkg.com/web-vitals?module').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-                getCLS(console.log);
-                getFID(console.log);
-                getFCP(console.log);
-                getLCP(console.log);
-                getTTFB(console.log);
-            });
-        });
-    </script>
-    
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -1890,5 +989,8 @@
         gtag('js', new Date());
         gtag('config', 'GA_MEASUREMENT_ID');
     </script>
+    
+    <script src="script.js" defer></script>
 </body>
 </html>
+
