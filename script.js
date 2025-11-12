@@ -1,4 +1,3 @@
-// Custom JavaScript extracted from barcc14.html
 document.addEventListener('DOMContentLoaded', () => {
     // Element References
     const startCameraBtn = document.getElementById('start-camera-btn');
