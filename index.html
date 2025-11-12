@@ -81,9 +81,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@zxing/library@latest"></script>
     
-    <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="styles.css">
-    
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -473,6 +470,346 @@
   ]
 }
 </script>
+    
+    <style>
+        :root {
+            --primary-color: #3B82F6;
+            --secondary-color: #38bdf8;
+            --text-color: #1f2937;
+            --bg-color: #f9fafb;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dark body {
+            background-color: #111827;
+            color: #f9fafb;
+        }
+
+        .scan-box {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            aspect-ratio: 1 / 1;
+            border-radius: 1.5em; 
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .scan-video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .scan-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            box-sizing: border-box;
+            background: 
+                linear-gradient(to right, #3B82F6 6px, transparent 6px) 0 0,
+                linear-gradient(to left, #3B82F6 6px, transparent 6px) 100% 0,
+                linear-gradient(to bottom, #3B82F6 6px, transparent 6px) 0 0,
+                linear-gradient(to bottom, #3B82F6 6px, transparent 6px) 100% 0,
+                linear-gradient(to right, #3B82F6 6px, transparent 6px) 0 100%,
+                linear-gradient(to left, #3B82F6 6px, transparent 6px) 100% 100%,
+                linear-gradient(to top, #3B82F6 6px, transparent 6px) 0 100%,
+                linear-gradient(to top, #3B82F6 6px, transparent 6px) 100% 100%;
+            background-repeat: no-repeat;
+            background-size: 30px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scanning-line {
+            position: absolute;
+            left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3B82F6 0%, #38bdf8 100%);
+            border-radius: 2px;
+            animation: scanline 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes scanline {
+            0%   { top: 10%; opacity: 0.5; }
+            50%  { opacity: 1; }
+            100% { top: 90%; opacity: 0.5; }
+        }
+
+        .scanner-controls {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .scanner-control-btn {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+            min-width: 55px;
+        }
+
+        .scanner-control-btn:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .scanner-control-btn .icon-wrapper {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1px;
+        }
+
+        .scanner-control-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .scanner-control-btn .control-label {
+            font-size: 0.65rem;
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        .torch-active { 
+            background-color: #3B82F6;
+            box-shadow: 0 0 10px 3px #3B82F6;
+        }
+
+        #result-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 1.5em;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .dark #result-container {
+            background-color: #1f2937;
+        }
+
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-link-active { color: #3B82F6; font-weight: bold; }
+
+        .content-section {
+            padding: 3rem 0;
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .testimonial {
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3B82F6;
+        }
+
+        .dark .testimonial {
+            background-color: #374151;
+            color: #f9fafb;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .how-to-step {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: #3B82F6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-icon {
+            flex-shrink: 0;
+            width: 2rem;
+            height: 2rem;
+            background-color: #3B82F6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+
+        .dark .comparison-table th {
+            background-color: #374151;
+            color: #f9fafb;
+        }
+
+        .dark .comparison-table td {
+            color: #f9fafb;
+        }
+
+        .comparison-table tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .dark .comparison-table tr:hover {
+            background-color: #1f2937;
+        }
+
+        .highlight-box {
+            background-color: #eff6ff;
+            border-left: 4px solid #3B82F6;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .dark .highlight-box {
+            background-color: #1e3a8a;
+            color: #f9fafb;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Accessibility improvements */
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #3B82F6;
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+
+        .skip-to-content:focus {
+            top: 0;
+        }
+        
+        /* Dark mode text color fixes */
+        .dark .text-gray-600 { color: #d1d5db !important; }
+        .dark .text-gray-800 { color: #f9fafb !important; }
+        .dark .text-gray-400 { color: #9ca3af !important; }
+        .dark .text-gray-500 { color: #6b7280 !important; }
+        .dark .text-gray-700 { color: #e5e7eb !important; }
+        .dark .bg-gray-50 { background-color: #111827 !important; }
+        .dark .bg-gray-100 { background-color: #1f2937 !important; }
+        .dark .bg-gray-200 { background-color: #374151 !important; }
+        .dark .bg-gray-300 { background-color: #4b5563 !important; }
+        .dark .bg-gray-700 { background-color: #374151 !important; }
+        .dark .bg-gray-800 { background-color: #1f2937 !important; }
+        .dark .bg-gray-900 { background-color: #111827 !important; }
+        .dark .border-gray-700 { border-color: #374151 !important; }
+        .dark .border-gray-200 { border-color: #374151 !important; }
+        .dark .border-gray-300 { border-color: #4b5563 !important; }
+        .dark .hover\:bg-gray-100:hover { background-color: #374151 !important; }
+        .dark .hover\:bg-gray-200:hover { background-color: #4b5563 !important; }
+        .dark .hover\:bg-gray-300:hover { background-color: #4b5563 !important; }
+        .dark .hover\:bg-gray-600:hover { background-color: #4b5563 !important; }
+        .dark .hover\:bg-gray-700:hover { background-color: #4b5563 !important; }
+        .dark .hover\:text-blue-400:hover { color: #60a5fa !important; }
+        .dark .hover\:text-blue-600:hover { color: #3b82f6 !important; }
+        .dark .text-blue-600 { color: #3b82f6 !important; }
+        .dark .text-blue-400 { color: #60a5fa !important; }
+        .dark .text-green-600 { color: #34d399 !important; }
+        .dark .text-green-400 { color: #4ade80 !important; }
+        .dark .text-yellow-600 { color: #fbbf24 !important; }
+        .dark .text-yellow-500 { color: #f59e0b !important; }
+        .dark .text-red-500 { color: #ef4444 !important; }
+        .dark .text-white { color: #ffffff !important; }
+        .dark .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important; }
+        .dark .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important; }
+        .dark .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important; }
+        .dark .shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4) !important; }
+        .dark .shadow { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2) !important; }
+    </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
@@ -993,7 +1330,330 @@
         gtag('config', 'GA_MEASUREMENT_ID');
     </script>
     
-    <!-- Link to external JavaScript file -->
-    <script src="script.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Element References
+            const startCameraBtn = document.getElementById('start-camera-btn');
+            const scanVideo = document.getElementById('scan-video');
+            const chooseInterface = document.getElementById('choose-interface');
+            const permissionError = document.getElementById('permission-error');
+            
+            const scanningView = document.getElementById('scanning-view');
+            const resultContainer = document.getElementById('result-container');
+            const scanOutput = document.getElementById('scan-output');
+            const scanLinks = document.getElementById('scan-links');
+
+            // Controls
+            const torchBtn = document.getElementById('torch-btn');
+            const uploadImageBtn = document.getElementById('upload-image-btn');
+            const imageUploadInput = document.getElementById('image-upload-input');
+            const uploadError = document.getElementById('upload-error');
+
+            let currentStream = null;
+            // Use ZXing from the CDN-loaded library
+            let codeReader = new ZXing.BrowserMultiFormatReader(); 
+            let scanRunning = false;
+            let isTorchOn = false;
+
+            // Simple Analytics
+            function trackEvent(eventName, parameters = {}) {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', eventName, parameters);
+                }
+                // console.log('Event tracked:', eventName, parameters);
+            }
+
+            function vibrate() { 
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(200);
+                }
+            }
+            
+            async function requestCameraPermission() {
+                stopAll(); // Stop previous streams
+                
+                // UI Reset
+                chooseInterface.classList.add('hidden');
+                resultContainer.classList.add('hidden');
+                scanningView.classList.remove('hidden');
+                permissionError.classList.add('hidden');
+                uploadError.classList.add('hidden'); 
+
+                try {
+                    const constraints = { 
+                        video: { 
+                            facingMode: "environment",
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 }
+                        } 
+                    };
+                    currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+                    scanVideo.srcObject = currentStream;
+                    
+                    scanRunning = true;
+                    trackEvent('camera_started', { method: 'auto' });
+
+                    const track = currentStream.getVideoTracks()[0];
+                    const capabilities = track.getCapabilities();
+                    
+                    if (capabilities.torch) {
+                        torchBtn.classList.remove('hidden');
+                    } else {
+                        torchBtn.classList.add('hidden');
+                    }
+
+                    codeReader.decodeFromStream(currentStream, scanVideo, (result, err) => {
+                        if (result) {
+                            codeReader.reset();
+                            onScanSuccess(result.text);
+                        }
+                    });
+
+                } catch (e) {
+                    console.error('Camera Access Error:', e);
+                    trackEvent('camera_error', { error: e.message });
+                    stopAll();
+                    chooseInterface.classList.remove('hidden');
+                    permissionError.classList.remove('hidden');
+                    scanningView.classList.add('hidden');
+                }
+            }
+
+            function stopAll() { 
+                codeReader.reset();
+                scanRunning = false;
+                
+                if (currentStream) {
+                    const track = currentStream.getVideoTracks()[0];
+                    if (track && track.getCapabilities().torch && isTorchOn) {
+                        track.applyConstraints({ advanced: [{ torch: false }] });
+                    }
+                    
+                    currentStream.getTracks().forEach(t => t.stop());
+                    scanVideo.srcObject = null;
+                    currentStream = null;
+                }
+                
+                scanningView.classList.add('hidden');
+                
+                torchBtn.classList.add('hidden');
+                torchBtn.classList.remove('torch-active');
+                isTorchOn = false;
+            }
+
+            // ==========================================================
+            // ===== UPDATED FUNCTION onScanSuccess (with UPI & BPOM Fixes) =====
+            // ==========================================================
+            function onScanSuccess(data) {
+                vibrate();
+                trackEvent('scan_success', { data_length: data.length });
+                stopAll(); // Stop scanning and camera
+                
+                scanOutput.textContent = data;
+                scanLinks.innerHTML = "";
+                
+                // FIX 1: Smart URL check for UPI, mailto:, http, www, etc.
+                const isUrl = data.startsWith("http") || data.startsWith("www") || data.includes("://");
+                
+                let fullUrl;
+                if (data.startsWith("www.")) {
+                    fullUrl = `https://${data}`;
+                } else {
+                    fullUrl = data; // Handles http, upi, mailto, etc. correctly
+                }
+
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(data)}`;
+                const bpomUrl = `https://cekbpom.pom.go.id/?keywords=${encodeURIComponent(data)}`;
+
+                if (isUrl) {
+                    // This will now work for upi:// links
+                    scanLinks.innerHTML += `<a href="${fullUrl}" target="_blank" class="block w-full text-center bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105">🔗 Buka Link</a>`;
+                
+                // FIX 2: Removed "data.match(/^\d+$/)" to allow letters/symbols
+                } else if (data.length >= 8) { 
+                    // This will now show BPOM button for codes like (90)NA...
+                    scanLinks.innerHTML += `<a href="${googleSearchUrl}" target="_blank" class="block w-full text-center bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-700 transition-all transform hover:scale-105">🔍 Cari Produk</a>`;
+                    scanLinks.innerHTML += `<a href="${bpomUrl}" target="_blank" class="block w-full text-center bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-all transform hover:scale-105 mt-2">🏥 Cek BPOM</a>`;
+                
+                } else {
+                    // Fallback for short, plain text
+                    scanLinks.innerHTML += `<a href="${googleSearchUrl}" target="_blank" class="block w-full text-center bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-700 transition-all transform hover:scale-105">🔍 Cari di Google</a>`;
+                }
+                
+                scanLinks.innerHTML += `<button onclick="copyResult()" class="block w-full text-center bg-gray-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-700 transition-all transform hover:scale-105 mt-2">📋 Salin Teks</button>`;
+                scanLinks.innerHTML += `<button onclick="scanAgain()" class="block w-full text-center bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-all transform hover:scale-105 mt-2">♻️ Scan Lagi</button>`;
+
+                resultContainer.classList.remove('hidden');
+                uploadError.classList.add('hidden');
+            }
+            // ==========================================================
+            // ===== END OF UPDATED FUNCTION =====
+            // ==========================================================
+
+
+            // --- Torch Button Click Handler ---
+            torchBtn.onclick = () => {
+                if (!currentStream) return;
+                
+                isTorchOn = !isTorchOn; 
+                const track = currentStream.getVideoTracks()[0];
+                
+                track.applyConstraints({
+                    advanced: [{ torch: isTorchOn }]
+                });
+                
+                torchBtn.classList.toggle('torch-active', isTorchOn);
+                trackEvent('torch_toggled', { state: isTorchOn });
+            };
+
+            // --- Scan from Image File ---
+            uploadImageBtn.onclick = () => {
+                imageUploadInput.click();
+                trackEvent('upload_clicked');
+            };
+
+            imageUploadInput.addEventListener('change', async (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                stopAll(); 
+                scanningView.classList.add('hidden');
+                resultContainer.classList.add('hidden');
+                uploadError.classList.add('hidden'); 
+
+                const imageUrl = URL.createObjectURL(file);
+                const image = new Image();
+                image.src = imageUrl;
+                
+                image.onload = async () => {
+                    try { 
+                        const result = await codeReader.decodeFromImageElement(image);
+                        if (result) {
+                            onScanSuccess(result.text); // Call the updated function
+                            trackEvent('image_scan_success', { file_size: file.size });
+                        } else {
+                            uploadError.textContent = 'Could not find a barcode/QR code in this image.';
+                            uploadError.classList.remove('hidden');
+                            trackEvent('image_scan_failed', { reason: 'no_code_found' });
+                            scanAgain(false); 
+                        }
+                    } catch (e) {
+                        console.error('Image Scan Error:', e);
+                        uploadError.textContent = 'An error occurred while processing the image.';
+                        uploadError.classList.remove('hidden');
+                        trackEvent('image_scan_error', { error: e.message });
+                        scanAgain(false);
+                    }
+                    URL.revokeObjectURL(imageUrl); 
+                    imageUploadInput.value = ''; 
+                };
+                
+                image.onerror = () => {
+                    console.error('Image load error');
+                    uploadError.textContent = 'Could not load the image file.';
+                    uploadError.classList.remove('hidden');
+                    trackEvent('image_scan_error', { error: 'image_load_failed' });
+                    scanAgain(false);
+                };
+            });
+            // =========================
+
+
+            // Global functions
+            window.scanAgain = function(restartCamera = true) {
+                resultContainer.classList.add('hidden');
+                uploadError.classList.add('hidden'); 
+                if (restartCamera) {
+                    requestCameraPermission(); 
+                } else {
+                    chooseInterface.classList.remove('hidden');
+                }
+                trackEvent('scan_again');
+            };
+
+            window.copyResult = function() {
+                if (!scanOutput.textContent) return;
+                
+                const copyButton = Array.from(document.querySelectorAll('#scan-links button'))
+                                       .find(btn => btn.textContent.includes('Salin Teks')); 
+            
+                navigator.clipboard.writeText(scanOutput.textContent).then(() => {
+                    trackEvent('text_copied');
+                    
+                    if (copyButton) {
+                        const originalText = copyButton.innerHTML;
+                        copyButton.innerHTML = '✅ Copied Successfully!';
+                        copyButton.disabled = true;
+                        
+                        setTimeout(() => {
+                            copyButton.innerHTML = originalText;
+                            copyButton.disabled = false;
+                        }, 2000);
+                    }
+            
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    alert('Failed to copy text.');
+                });
+            };
+            
+            startCameraBtn.onclick = () => {
+                requestCameraPermission();
+                trackEvent('start_camera_clicked');
+            };
+
+            // --- AUTO-START THE SCANNER ON PAGE LOAD ---
+            requestCameraPermission();
+
+            // --- Other UI Scripts (FAQ, Dark Mode, Mobile Menu) ---
+            document.querySelectorAll('.faq-question').forEach(q => { 
+                q.addEventListener('click', () => { 
+                    const a = q.nextElementSibling; 
+                    const i = q.querySelector('.faq-icon'); 
+                    a.classList.toggle('hidden'); 
+                    i.textContent = a.classList.contains('hidden') ? '+' : '-';
+                    q.setAttribute('aria-expanded', a.classList.contains('hidden') ? 'false' : 'true');
+                    trackEvent('faq_toggled', { question: q.querySelector('span').textContent });
+                }); 
+            });
+
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            darkModeToggle.addEventListener('click', () => {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.theme = 'light';
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.theme = 'dark';
+                }
+                trackEvent('dark_mode_toggled', { state: document.documentElement.classList.contains('dark') });
+            });
+
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                trackEvent('mobile_menu_toggled');
+            });
+            
+            // Page visibility API to pause/resume scanning
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    if (scanRunning) {
+                        stopAll();
+                    }
+                } else {
+                    if (resultContainer.classList.contains('hidden')) {
+                        requestCameraPermission();
+                    }
+                }
+            });
+        });
+    </script>
+    </body>
 </html>
