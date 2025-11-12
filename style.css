@@ -305,15 +305,6 @@ img {
 .dark .text-gray-400 { color: #9ca3af !important; }
 .dark .text-gray-500 { color: #6b7280 !important; }
 .dark .text-gray-700 { color: #e5e7eb !important; }
-.dark .bg-white {
-    background-color: #1f2937 !important; /* dark:bg-gray-800 */
-}
-.dark .bg-gray-50 {
-    background-color: #111827 !important; /* dark:bg-gray-900 */
-}
-.dark .bg-gray-100 {
-    background-color: #1f2937 !important; /* dark:bg-gray-800 */
-}
 .dark .bg-gray-50 { background-color: #111827 !important; }
 .dark .bg-gray-100 { background-color: #1f2937 !important; }
 .dark .bg-gray-200 { background-color: #374151 !important; }
